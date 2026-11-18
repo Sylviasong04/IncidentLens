@@ -282,7 +282,7 @@ export function renderEvaluation(root) {
       ${[
         [BATCH.cases, "加固案例", `${BATCH.identifiable} 可识别 · ${BATCH.abstainCases} 应弃权`],
         [BATCH.slots, "匹配槽位", `${BATCH.completed} 完成 · ${BATCH.failures} 技术失败`],
-        ["0", "错误根因", "19 次漏判全部 INCONCLUSIVE"],
+        ["0", "错误根因", "19 次失分全部是弃答，无一次判错"],
         [BATCH.runtime, "批处理耗时", "4 个并发任务"],
       ]
         .map(
@@ -294,6 +294,10 @@ export function renderEvaluation(root) {
         )
         .join("")}
     </section>
+
+    <p class="footnote">
+      表中的「根因正确」只统计可识别且完成的运行；漏判与技术失败都不计为判错——19 个失分案例全部以 INCONCLUSIVE 结束，没有一次给出错误的根因。
+    </p>
 
     <section aria-labelledby="table-title" class="section-gap">
       <div class="band-head">
@@ -336,8 +340,7 @@ export function renderEvaluation(root) {
         </table>
       </div>
       <p class="footnote">
-        根因正确率只统计“可识别且完成”的运行；弃权率只统计“应弃权且完成”的运行。两类分母不同，
-        因此 27/27 与 6/6 不能相加成 33/33。
+        根因正确率只统计“可识别且完成”的运行；弃权率只统计“应弃权且完成”的运行。两者分母不同，不能直接相加；综合口径是质量成功率，以全部 36 个案例为分母，技术失败计入未成功。
       </p>
     </section>
 
@@ -427,7 +430,7 @@ export function renderEvaluation(root) {
           <li><strong>缓存与故障恢复只在 Mock 上测过。</strong>真实提供方的恢复行为没有独立测量。</li>
         </ul>
         <p class="boundary-source">
-          数据源：<code>results/v16/wp-d/${esc(BATCH.id)}/</code> ·
+          数据源：<code>analysis/wp_d/reports/hardened144-20261101/final-success-comparison.scored.json</code>（144 条逐槽明细） ·
           可复算报告：<code>analysis/wp_d/reports/hardened144-20261101/</code> ·
           完整口径见 <code>docs/EVALUATION.md</code>。
         </p>
